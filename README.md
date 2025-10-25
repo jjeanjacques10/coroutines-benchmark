@@ -32,6 +32,28 @@ cenário diferente de concorrência:
 | `processSequentialStrategy`     | Executa o check‑in e, somente após sua conclusão, invoca o processador de pagamento — execução sequencial dentro de uma função suspensa (sem concorrência entre as operações). Útil como baseline para medições seriais.                                                                                                                  |
 | `blockingThreadStrategy`        | Executa as operações concorrentemente mas bloqueando a thread chamadora usando `runBlocking(Dispatchers.IO)`; usa `await()` para obter resultados e envolve a execução em `withTimeout` (ex.: 10s) para evitar bloqueios indefinidos. Mantém comportamento bloqueante para comparação, mas é uma abordagem menos recomendada em produção. |
 
+Para usar cada estratégia, basta alterar a chamada passando o `header` correspondente na requisição HTTP:
+
+| Estratégia                | Header HTTP               |
+|---------------------------|---------------------------|
+| `processAsyncCoroutineStrategy` | `strategy: ASYNC_COROUTINE` |
+| `processSequentialStrategy`     | `strategy: SEQUENTIAL`          |
+| `blockingThreadStrategy`        | `strategy: BLOCKING_THREAD`     |
+
+Exemplo de requisição usando a estratégia `ASYNC_COROUTINE`:
+
+``` shell
+curl --request POST \
+  --url http://localhost:9999/payments \
+  --header 'Content-Type: application/json' \
+  --header 'strategy: ASYNC_COROUTINE' \
+  --data '{
+    "correlationId": "8b2d05e3-337f-4691-aac1-37761310208e",
+    "amount": "19.90",
+    "requestedAt": "2025-07-27T13:06:12.892Z"
+  }'
+```
+
 ## Execução dos Testes
 
 Para executar os testes de carga utilizando o K6, utilize o seguinte comando:

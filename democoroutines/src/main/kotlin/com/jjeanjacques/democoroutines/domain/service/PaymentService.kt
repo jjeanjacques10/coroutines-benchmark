@@ -26,7 +26,7 @@ class PaymentService(
 
     suspend fun processPayment(payment: Payment, strategy: Strategy): StatusPayment {
         try {
-            log.info("[${payment.correlationId}] Requesting payment, requested at: ${payment.requestedAt}")
+            log.info("[${strategy}][${payment.correlationId}] Requesting payment, requested at: ${payment.requestedAt}")
 
             val (checking, statusPayment) = getStrategyProcessor(strategy, payment)
 
