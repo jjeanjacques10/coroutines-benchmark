@@ -1,0 +1,29 @@
+x-service-templates:
+  api1: &api-processor
+    image: jjeanjacques10/democoroutines
+    networks:
+      - payment-processor
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: '1.0GB'
+
+services:
+  api1:
+    <<: *api-processor
+    container_name: api1
+    hostname: api1
+    environment:
+      - APP_PORT=9999
+      - WORKER_ID=1
+      - PROCESSOR_DEFAULT_URL=http://payment-processor-default:8080
+      - PROCESSOR_FALLBACK_URL=http://payment-processor-fallback:8080
+      - AUTHORIZER_URL=http://mockserver:1080
+      - REDIS_HOST=redis-rinha
+      - LOG_LEVEL=ERROR
+
+networks:
+  payment-processor:
+    name: payment-processor
+    driver: bridge

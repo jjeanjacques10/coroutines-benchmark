@@ -1,0 +1,99 @@
+# Git ignore for coroutines-benchmark
+# Focus: Spring Boot (Maven/Gradle), Kotlin, and k6 test outputs
+
+# Ignore build outputs anywhere in the repo
+**/target/
+**/build/
+/out/
+
+# Java/Kotlin compiled files and archives
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Generated sources and META-INF generated modules
+**/generated-sources/
+**/generated/
+**/META-INF/
+
+# Maven
+/.mvn/
+settings-local.xml
+
+# Gradle
+.gradle/
+
+# Ignore IDE files
+/.idea/
+*.iml
+*.iws
+*.ipr
+.idea/**/workspace.xml
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+logs/
+*.log
+*.tmp
+*.temp
+
+# Spring Boot devtools / restart markers
+.restart
+.springBeans
+
+# Spring Boot executable jars built by Maven/Gradle
+*.jar
+
+# k6 performance test outputs — keep scripts but ignore generated results/reports
+/k6-test/results/
+/k6-test/output/
+/k6-test/report/
+.k6/
+k6-report/
+k6-results/
+/k6-test/**/*.json
+/k6-test/**/*.csv
+/k6-test/**/*.out
+
+# Local environment and secrets
+local_env/
+*.env
+.env.local
+.env.*.local
+
+# Docker local overrides
+docker-compose.override.yml
+**/docker-compose.override.yml
+
+# Mock server files that are runtime-only
+mockserver/files/
+
+# Observability runtime files
+observability/**/data/
+
+# Ignore OneDrive and backup files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Misc
+/node_modules/
+*.bak
+*.swp
+
+# Ensure .gitignore itself is tracked
+!.gitignore

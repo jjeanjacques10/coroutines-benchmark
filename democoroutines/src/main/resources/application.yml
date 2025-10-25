@@ -1,0 +1,39 @@
+server:
+  port: ${APP_PORT:9999}
+
+worker:
+  id: ${WORKER_ID:1}
+
+spring:
+  application:
+    name: rinhabackend-${WORKER_ID:1}
+  main:
+    banner-mode: off
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+      ssl:
+        enable: false
+
+apis:
+  authorizer:
+    url: ${AUTHORIZER_URL:http://localhost:1080}
+  payment-processor:
+    default:
+      url: ${PROCESSOR_DEFAULT_URL:http://localhost:8001}
+    fallback:
+      url: ${PROCESSOR_FALLBACK_URL:http://localhost:8002}
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
