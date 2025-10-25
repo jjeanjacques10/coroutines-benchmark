@@ -2,7 +2,6 @@ package com.jjeanjacques.democoroutines.adapter.output.rest.paymentprocessor
 
 import com.jjeanjacques.democoroutines.adapter.output.rest.paymentprocessor.client.PaymentProcessorClient
 import com.jjeanjacques.democoroutines.adapter.output.rest.paymentprocessor.request.PaymentProcessorRequest
-import com.jjeanjacques.democoroutines.adapter.output.rest.paymentprocessor.response.PaymentProcessorStatusResponse
 import com.jjeanjacques.democoroutines.domain.enums.TypePayment
 import com.jjeanjacques.democoroutines.domain.exceptions.AlreadyProcessedRuntimeException
 import com.jjeanjacques.democoroutines.domain.exceptions.IntegrationException
@@ -71,16 +70,6 @@ class PaymentProcessorService(
                 )
             )
         )
-    }
-
-
-    suspend fun requestPaymentProcessorStatus(type: TypePayment): PaymentProcessorStatusResponse? {
-        return try {
-            paymentProcessorClient.requestPaymentProcessorStatus(type)
-        } catch (ex: Exception) {
-            log.warn("Error requesting payment processor status for type $type: ${ex.message}", ex)
-            throw ex
-        }
     }
 
     companion object {
