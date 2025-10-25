@@ -27,6 +27,7 @@ const backendHttp = new Httpx({
     //baseURL: "http://localhost:5123",
     headers: {
         "Content-Type": "application/json",
+        "strategy": "ASYNC_COROUTINE"
     },
     timeout: 1500,
 });
