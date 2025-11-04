@@ -1,11 +1,6 @@
 #!/bin/bash -e
 # Script to compare performance metrics from the three strategy reports
 
-# Note: -e flag in shebang ensures script fails fast on any command errors
-# set -e below is redundant but kept for clarity
-
-set -e
-
 SCRIPT_DIR="$(dirname "$0")"
 
 echo "=========================================="

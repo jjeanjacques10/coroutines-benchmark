@@ -2,11 +2,6 @@
 # Wrapper script to run k6 tests for three payment-processing strategies
 # Generates separate JSON reports for each strategy
 
-# Note: -e flag in shebang ensures script fails fast on any command errors
-# set -e below is redundant but kept for clarity
-
-set -e
-
 K6_SCRIPT="$(dirname "$0")/payments_test.js"
 OUTPUT_DIR="$(dirname "$0")"
 
