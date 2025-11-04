@@ -56,7 +56,38 @@ curl --request POST \
 
 ## Execução dos Testes
 
-Para executar os testes de carga utilizando o K6, utilize o seguinte comando:
+### Testes de Carga de Estratégias de Pagamento
+
+Para executar testes de carga isolados para cada estratégia de processamento de pagamentos (ASYNC_COROUTINE, SEQUENTIAL, BLOCKING_THREAD):
+
+```bash
+cd k6-test
+./run_payment_tests.sh
+```
+
+Este comando executará três testes separados e gerará relatórios individuais:
+- `relatorio_async_coroutine.json` - Estratégia não-bloqueante com async/await
+- `relatorio_sequential.json` - Estratégia sequencial (baseline)
+- `relatorio_blocking_thread.json` - Estratégia com threads bloqueantes
+
+Para executar um teste individual de uma estratégia específica:
+
+```bash
+# Testar apenas a estratégia ASYNC_COROUTINE
+k6 run -e STRATEGY=ASYNC_COROUTINE k6-test/payments_test.js --summary-export=relatorio_async.json
+
+# Testar apenas a estratégia SEQUENTIAL
+k6 run -e STRATEGY=SEQUENTIAL k6-test/payments_test.js --summary-export=relatorio_sequential.json
+
+# Testar apenas a estratégia BLOCKING_THREAD
+k6 run -e STRATEGY=BLOCKING_THREAD k6-test/payments_test.js --summary-export=relatorio_blocking.json
+```
+
+Para mais detalhes, consulte [k6-test/PAYMENT_TESTS_README.md](k6-test/PAYMENT_TESTS_README.md).
+
+### Testes da Rinha de Backend
+
+Para executar os testes da Rinha de Backend original:
 
 ```bash
 ./execute_coroutines.sh
