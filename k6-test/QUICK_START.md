@@ -5,21 +5,22 @@ This is a quick reference for running k6 load tests on the three payment process
 ## Prerequisites
 
 ```bash
-# Install k6 (if not already installed)
+# Install k6 following the official instructions for your platform:
+# https://grafana.com/docs/k6/latest/set-up/install-k6/
+
+# Quick install examples (see official docs for latest commands):
+
 # macOS
 brew install k6
 
-# Ubuntu/Debian
-sudo gpg -k
-sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-sudo apt-get update
-sudo apt-get install k6
+# Ubuntu/Debian - See: https://k6.io/docs/get-started/installation/#debian-ubuntu
+# Follow the official APT repository instructions
 
 # Windows (using Chocolatey)
 choco install k6
 
-# Or download from: https://grafana.com/docs/k6/latest/set-up/install-k6/
+# Or download binary directly from:
+# https://github.com/grafana/k6/releases
 ```
 
 ## File Structure

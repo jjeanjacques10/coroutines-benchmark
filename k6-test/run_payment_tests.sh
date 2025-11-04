@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 # Wrapper script to run k6 tests for three payment-processing strategies
 # Generates separate JSON reports for each strategy
+
+# Note: -e flag in shebang ensures script fails fast on any command errors
+# set -e below is redundant but kept for clarity
 
 set -e
 
