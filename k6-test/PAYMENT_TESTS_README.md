@@ -116,7 +116,23 @@ cat relatorio_async_coroutine.json | jq '.metrics.http_req_duration'
 
 ## Comparing Strategies
 
-After running all tests, you can compare the strategies:
+### Using the Comparison Script
+
+After running all tests, use the automated comparison script:
+
+```bash
+./compare_reports.sh
+```
+
+This will display a formatted comparison table showing:
+- HTTP request duration percentiles (min, avg, median, p90, p95, p99)
+- Throughput (requests per second) and error rates
+- Test duration and data transfer
+- Check success rates
+
+### Manual Comparison
+
+You can also compare strategies manually:
 
 ```bash
 # Compare p99 latencies
