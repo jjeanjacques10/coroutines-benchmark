@@ -6,8 +6,8 @@ x-service-templates:
     deploy:
       resources:
         limits:
-          cpus: '2.0'
-          memory: '1.0GB'
+          cpus: '1.0'
+          memory: '600MB'
 
 services:
   api1:
@@ -19,8 +19,8 @@ services:
     environment:
       - APP_PORT=9999
       - WORKER_ID=1
-      - PROCESSOR_DEFAULT_URL=http://payment-processor-default:8080
-      - PROCESSOR_FALLBACK_URL=http://payment-processor-fallback:8080
+      - PROCESSOR_DEFAULT_URL=http://mockserver:1080
+      - PROCESSOR_FALLBACK_URL=http://mockserver:1080
       - AUTHORIZER_URL=http://mockserver:1080
       - REDIS_HOST=redis-rinha
       - LOG_LEVEL=ERROR

@@ -41,19 +41,19 @@ const baseScenarios = {
     executor: 'constant-vus',
     exec: 'asyncCoroutineScenario',
     vus: 50,
-    duration: '30s',
+    duration: '60s',
   },
   SEQUENTIAL: {
     executor: 'constant-vus',
     exec: 'sequentialScenario',
-    vus: 20,
-    duration: '30s',
+    vus: 50,
+    duration: '60s',
   },
   BLOCKING_THREAD: {
     executor: 'constant-vus',
     exec: 'blockingThreadScenario',
-    vus: 10,
-    duration: '30s',
+    vus: 50,
+    duration: '60s',
   },
 };
 

@@ -21,9 +21,9 @@ apis:
     url: ${AUTHORIZER_URL:http://localhost:1080}
   payment-processor:
     default:
-      url: ${PROCESSOR_DEFAULT_URL:http://localhost:8001}
+      url: ${PROCESSOR_DEFAULT_URL:http://localhost:1080}
     fallback:
-      url: ${PROCESSOR_FALLBACK_URL:http://localhost:8002}
+      url: ${PROCESSOR_FALLBACK_URL:http://localhost:1080}
 
 logging:
   level:
