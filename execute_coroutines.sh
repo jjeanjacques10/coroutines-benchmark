@@ -33,4 +33,4 @@ echo "Waiting for the services to be ready..."
 sleep 15
 
 echo "Running k6 tests..."
-k6 run k6-test/rinha.js
+./k6-test/run_payment_tests.sh

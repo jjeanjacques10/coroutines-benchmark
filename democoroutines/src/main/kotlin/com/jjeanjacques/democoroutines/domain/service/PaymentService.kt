@@ -7,6 +7,7 @@ import com.jjeanjacques.democoroutines.domain.exceptions.AlreadyProcessedRuntime
 import com.jjeanjacques.democoroutines.domain.models.Payment
 import com.jjeanjacques.democoroutines.domain.port.output.CheckinPort
 import com.jjeanjacques.democoroutines.domain.port.output.PaymentRepository
+import com.jjeanjacques.democoroutines.domain.port.output.SimulationPort
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service
 class PaymentService(
     private val paymentProcessorService: PaymentProcessorService,
     private val checkinPort: CheckinPort,
+    private val simulationPort: SimulationPort,
     private val paymentRepository: PaymentRepository
 ) {
 
@@ -53,13 +55,19 @@ class PaymentService(
     suspend fun processAsyncCoroutineStrategy(payment: Payment): Pair<Boolean, StatusPayment> {
         return coroutineScope {
             val checking = async { checkinPort.checkin(payment.correlationId) }
+            val simulation = async { simulationPort.simulate(payment.correlationId) }
             val status = async { getStatusProcess(payment) }
+
+            valideSimulation(simulation.await(), payment.correlationId)
             Pair(checking.await(), status.await())
         }
     }
 
     suspend fun processSequentialStrategy(payment: Payment): Pair<Boolean, StatusPayment> {
         val checkin = checkinPort.checkin(payment.correlationId)
+        val simulation = simulationPort.simulate(payment.correlationId)
+
+        valideSimulation(simulation, payment.correlationId)
         val statusPayment = getStatusProcess(payment)
         return Pair(checkin, statusPayment)
     }
@@ -67,21 +75,31 @@ class PaymentService(
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun blockingThreadStrategy(payment: Payment): Pair<Boolean, StatusPayment> {
         var checking: Boolean
+        var simulation: Boolean
         var status: StatusPayment
         // Use runBlocking on Dispatchers.IO to avoid blocking the caller's event-loop thread.
         // Add a timeout so the blocking call won't hang forever.
-        runBlocking(Dispatchers.IO) {
+        runBlocking {
             withTimeout(10_000) {
                 supervisorScope {
-                    val checkingResponse = async { checkinPort.checkin(payment.correlationId) }
-                    val statusResponse = async { getStatusProcess(payment) }
+                    val checkingResponse = async(Dispatchers.IO) { checkinPort.checkin(payment.correlationId) }
+                    val simulationResponse = async(Dispatchers.IO) { simulationPort.simulate(payment.correlationId) }
+                    val statusResponse = async(Dispatchers.IO) { getStatusProcess(payment) }
 
                     checking = checkingResponse.await()
+                    simulation = simulationResponse.await()
                     status = statusResponse.await()
                 }
             }
         }
+        valideSimulation(simulation, payment.correlationId)
         return  Pair(checking, status)
+    }
+
+    private fun valideSimulation(simulation: Boolean, correlationId: String) {
+        if (!simulation) {
+            log.warn("[${correlationId}] Simulation failed")
+        }
     }
 
     private suspend fun getStatusProcess(payment: Payment) = try {
