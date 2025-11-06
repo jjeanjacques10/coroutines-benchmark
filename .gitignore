@@ -68,8 +68,7 @@ k6-results/
 /k6-test/**/*.csv
 /k6-test/**/*.out
 
-# Local environment and secrets
-local_env/
+# secrets
 *.env
 .env.local
 .env.*.local

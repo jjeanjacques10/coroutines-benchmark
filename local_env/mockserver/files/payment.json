@@ -1,0 +1,23 @@
+[
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/payments"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": {
+        "message": "Payment processed successfully"
+      },
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 300
+      }
+    }
+  }
+]
