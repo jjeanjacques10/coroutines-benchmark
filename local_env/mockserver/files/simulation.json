@@ -1,0 +1,23 @@
+[
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/simulation"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": {
+        "authorized": true
+      },
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 300
+      }
+    }
+  }
+]

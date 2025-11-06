@@ -1,0 +1,20 @@
+services:
+  mockserver:
+    image: mockserver/mockserver:latest
+    container_name: mockserver
+    hostname: mockserver
+    ports:
+      - "1080:1080"
+    environment:
+      - MOCKSERVER_PORT=1080
+      - MOCKSERVER_INITIALIZATION_JSON_PATH=/config/files/*.json
+      - MOCKSERVER_WATCH_INITIALIZATION_JSON=true
+    volumes:
+      - ./:/config/
+    networks:
+      - payment-processor
+
+networks:
+  payment-processor:
+    name: payment-processor
+    driver: bridge
